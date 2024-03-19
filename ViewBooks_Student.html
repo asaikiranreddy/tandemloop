@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Library System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        /* Style for language change button */
+        .language-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff; /* Blue color */
+            color: #fff; /* White text color */
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Style for signout button */
+        .signout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545; /* Red color */
+            color: #fff; /* White text color */
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div align="center" ng-controller="BookListCtrl_Student">
+        <h2 ng-bind="title" ng-style="{'color':'red','font-style':'italic'}"></h2>
+        <div>
+            <label>View Books</label>
+            <select ng-model="view">
+                <option value="">All Books</option>
+                <option value="Available">Available Books</option>
+            </select>
+        </div>
+        <div>
+            <label>Search books: </label><input type="text" ng-model="bookSrch"></input>
+        </div>
+        <div>
+            <label>Sort books: </label>
+            <select ng-model="bookSort">
+                <option value="">No Sort</option>
+                <option value="cost">Cost</option>
+                <option value="topic">Topic</option>
+            </select>
+        </div><br></br>
+        <div>
+            <table border="1">
+                <tr class="LoginFormDiv">
+                    <th>Sl. No.</th>
+                    <th>Image</th>
+                    <th>Details</th>
+                </tr>
+                <tr highlight class="LoginFormDiv" ng-repeat="i in books | filter:bookSrch | orderBy:bookSort | filterunissued:view">
+                    <td>{{$index+1}}</td>
+                    <td><img width="50%" height="50%" ng-src="{{i.imgUrl}}"></img></td>
+                    <td>
+                        <div>Book ID     : {{i.bookId}}</div>
+                        <div>Book Title  : {{i.bookTitle}}</div>
+                        <div>Book Topic  : {{i.topic}}</div>
+                        <div>Book Author : {{i.author}}</div>
+                        <div>Book Cost   : {{i.cost | currency:'Rs.'}}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br></br>
+    </div>
+
+    <!-- Language change button -->
+    <button class="language-btn" ng-click="changeLanguage()">Change Language</button>
+    <!-- Signout button -->
+    <button class="signout-btn" ng-click="signout()">Sign Out</button>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('BookListCtrl_Student', function($scope) {
+            // Sample languages, replace with actual language options
+            $scope.languages = ['English', 'Spanish', 'French'];
+
+            // Function to handle signout
+            $scope.signout = function() {
+                // Implement signout functionality here
+                alert("Signing out...");
+            };
+
+            // Function to change language
+            $scope.changeLanguage = function() {
+                // Implement language change functionality here
+                alert("Changing language...");
+            };
+
+            // Sample data for books
+            $scope.books = [
+                { bookId: 1, bookTitle: 'Book 1', topic: 'Topic 1', author: 'Author 1', cost: 20, imgUrl: 'img/book1.jpg' },
+                { bookId: 2, bookTitle: 'Book 2', topic: 'Topic 2', author: 'Author 2', cost: 25, imgUrl: 'img/book2.jpg' },
+                // Add more sample data as needed
+            ];
+
+            // Initial title
+            $scope.title = "Library System";
+        });
+    </script>
+</body>
+</html>
